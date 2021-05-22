@@ -7,9 +7,9 @@
 from 60_ansi layout
 inspired by bingocaller's layout 
 
-Rebind CapsLock to ESC (tap) / Layer1 (hold)
-Vim-like arrows on Layer1
-
+- Rebind CapsLock to ESC (tap) / utils layer (hold)
+- Vim-like arrows on utils layer
+- gaming layer (CapsLock -> LShift, LWin -> keypad 0)
 
 
 ## discipline
