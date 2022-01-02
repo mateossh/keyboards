@@ -31,6 +31,8 @@ enum planck_layers {
   _UTILS,
 };
 
+#include "tapdance.c"
+
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
@@ -41,6 +43,12 @@ enum planck_keycodes {
 #define RAISE MO(_RAISE)
 #define ESC_MOD LT(_UTILS, KC_ESC) //        KC_GESC <- KC_ESC
 
+// Tap once: [. Hold: LALT. Tap twice: {
+#define KC_TLALT TD(TD_LBRC_LALT_LCBR)
+// Tap once: ]. Hold: RALT. Tap twice: }
+#define KC_TRALT TD(TD_RBRC_RALT_RCBR)
+#define SH_ENT RSFT_T(KC_ENT)       // Right Shift (hold) Enter (tap)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -49,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |Esc/UT|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Sh/ent|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | RAlt | Util | Util | Ctrl |
  * `-----------------------------------------------------------------------------------'
@@ -57,8 +65,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT_planck_grid(
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     ESC_MOD, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    KC_LCTL, BACKLIT, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_RALT, ESC_MOD, ESC_MOD, KC_RCTL
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, SH_ENT ,
+    KC_LCTL, BACKLIT, KC_LGUI, KC_TLALT, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_TRALT, ESC_MOD, ESC_MOD, KC_RCTL
 ),
 
 /* Colemak
@@ -299,4 +307,10 @@ bool music_mask_user(uint16_t keycode) {
     default:
       return true;
   }
+}
+
+void matrix_init_user(void) {
+#ifdef AUDIO_ENABLE
+  startup_user();
+#endif
 }
