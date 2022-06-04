@@ -49,4 +49,4 @@
 // #define ENCODER_RESOLUTION 4
 
 
-#define TAPPING_TERM 150
+#define TAPPING_TERM 170
