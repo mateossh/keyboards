@@ -1,5 +1,6 @@
 # planck
 
+`qmk compile -kb planck/rev6 -km mateossh`
 
 `find ./ -iname "readme.md" | less`
 
