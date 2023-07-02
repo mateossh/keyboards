@@ -6,6 +6,7 @@ enum my_keycodes {
 	LAY_QWE = SAFE_RANGE,
   LAY_COL,
 	LAY_GAM,
+	APSGLDE, // apex legends super glide
 };
 
 enum layer_names {
@@ -52,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
 		KC_LSFT, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
 		KC_LSFT, KC_NO,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, KC_NO,
-		KC_LCTL, KC_KP_0, KC_LALT, KC_SPC,  KC_SPC,  KC_SPC,  KC_RALT, MO(_LED),   KC_NO,   MO(_UTILS),   KC_RCTL
+		KC_LCTL, APSGLDE, KC_LALT, KC_SPC,  KC_SPC,  KC_SPC,  KC_RALT, MO(_LED),   KC_NO,   MO(_UTILS),   KC_RCTL
 	),
 
 	[_UTILS] = LAYOUT(
@@ -88,6 +89,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				// do something when released
 			}
 			return true; // Let QMK send the press/release events
+		case APSGLDE:
+			if (record->event.pressed) {
+				SEND_STRING(SS_TAP(X_SPC) SS_DELAY(5) "c");
+			}
+			return true;
 		default:
 			return true; // Process all other keycodes normally
 	}
